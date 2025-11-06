@@ -1,0 +1,1 @@
+https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.5.7&packaging=jar&configurationFileFormat=properties&jvmVersion=25&groupId=com.example&artifactId=book-network&name=book-network&description=book%20network&packageName=com.example.book-network&dependencies=web,postgresql,lombok,security,validation,thymeleaf,mail,data-jpa
