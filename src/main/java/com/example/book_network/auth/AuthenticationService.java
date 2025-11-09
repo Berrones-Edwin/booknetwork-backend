@@ -21,11 +21,11 @@ import lombok.RequiredArgsConstructor;
 public class AuthenticationService {
 
     @Value("${mailing.frontend.activation-url}")
-    private final String activationUrl;
+    private String activationUrl;
 
     private final RoleRepository roleRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
 
@@ -66,7 +66,7 @@ public class AuthenticationService {
     private String generateAndSaveActivationToken(User user) {
 
         String generateToken = generateActivationCode(6);
-        return null;
+        return generateToken;
     }
 
     private String generateActivationCode(int len) {
