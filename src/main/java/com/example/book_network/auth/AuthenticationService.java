@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.book_network.email.EmailService;
-import com.example.book_network.email.EmailTemplateName;
 import com.example.book_network.role.RoleRepository;
 import com.example.book_network.user.User;
 import com.example.book_network.user.UserRepository;
@@ -25,7 +24,7 @@ public class AuthenticationService {
 
     private final RoleRepository roleRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
 
@@ -53,13 +52,13 @@ public class AuthenticationService {
     private void sendValidationEmail(User user) throws MessagingException {
 
         var newToken = generateAndSaveActivationToken(user);
-        emailService.sendEmail(
-                user.getEmail(),
-                user.getFullName(),
-                EmailTemplateName.ACTIVATE_ACCOUNT,
-                activationUrl,
-                newToken,
-                "Account activation");
+        // emailService.sendEmail(
+        // user.getEmail(),
+        // user.getFullName(),
+        // EmailTemplateName.ACTIVATE_ACCOUNT,
+        // activationUrl,
+        // newToken,
+        // "Account activation");
 
     }
 

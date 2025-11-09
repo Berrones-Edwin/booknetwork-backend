@@ -24,6 +24,7 @@ public class BeansConfig {
         return authenticationProvider;
     }
 
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
