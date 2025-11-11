@@ -1,5 +1,6 @@
 package com.example.book_network.book;
 
+import java.beans.Transient;
 import java.util.List;
 
 import com.example.book_network.common.BaseEntity;
@@ -42,5 +43,19 @@ public class Book extends BaseEntity {
 
     @OneToMany(mappedBy = "book")
     private List<BookTransactionHistory> histories;
+
+    @Transient
+    public double getRate() {
+
+        if (feedbacks == null || feedbacks.isEmpty()) {
+            return 0.0;
+        }
+        double rate = this.feedbacks.stream()
+                .mapToDouble(FeedBack::getNote)
+                .average()
+                .orElse(0.0);
+        double roundedRate = Math.round(rate * 10.0) / 10.0;
+        return roundedRate;
+    }
 
 }
