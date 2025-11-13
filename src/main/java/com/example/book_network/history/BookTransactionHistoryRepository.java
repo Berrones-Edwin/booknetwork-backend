@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.example.book_network.book.Book;
+
 public interface BookTransactionHistoryRepository extends JpaRepository<BookTransactionHistory, Integer> {
 
         @Query("""
@@ -42,5 +44,16 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
                         AND h.returnedSpproved =false
                         """)
         Optional<BookTransactionHistory> findByBookIdAndUserId(Integer bookId, Integer id);
+
+        @Query("""
+                        SELECT h
+                        FROM BookTransactionHistory h
+                        WHERE h.book.owner.id = :id
+                        AND h.book.id = :bookId
+                        AND h.returned =true
+                        AND h.returnedSpproved =false
+                        """)
+
+        Optional<BookTransactionHistory> findByBookIdAndOwnerId(Integer bookId, Integer id);
 
 }
