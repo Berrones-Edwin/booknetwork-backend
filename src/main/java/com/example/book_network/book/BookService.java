@@ -9,8 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.book_network.exception.OperationNotPermittedException;
+import com.example.book_network.file.FileStorageService;
 import com.example.book_network.history.BookTransactionHistory;
 import com.example.book_network.history.BookTransactionHistoryRepository;
 import com.example.book_network.user.User;
@@ -25,6 +27,7 @@ public class BookService {
         private final BookMapper bookMapper;
         private final BookRepository bookRepository;
         private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
+        private final FileStorageService fileStorageService;
 
         public Integer save(BookRequest request, Authentication authentication) {
                 User user = ((User) authentication.getPrincipal());
@@ -228,6 +231,18 @@ public class BookService {
 
                 bookTransactionHistory.setReturnApproved(true);
                 return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
+        }
+
+        public void uploadBookCoverPicture(MultipartFile file, Authentication authentication, Integer bookId) {
+                Book book = bookRepository.findById(bookId)
+                                .orElseThrow(() -> new EntityNotFoundException("No book found with the ID: " + bookId));
+
+                User user = ((User) authentication.getPrincipal());
+
+                String bookCover = fileStorageService.saveFile(file, user.getId());
+
+                book.setBookCover(bookCover);
+                bookRepository.save(book);
         }
 
 }

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -107,6 +109,15 @@ public class BookController {
             @PathVariable("bookId") Integer bookId,
             Authentication authentication) {
         return ResponseEntity.ok(bookService.apporoveReturnBorrowBook(bookId, authentication));
+    }
+
+    @PostMapping(value = "/cover/{bookId}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCoverPicture(
+            @PathVariable("bookId") Integer bookId,
+            Authentication authentication,
+            @RequestPart("file") MultipartFile file) {
+        bookService.uploadBookCoverPicture(file, authentication, bookId);
+        return ResponseEntity.accepted().build();
     }
 
 }
