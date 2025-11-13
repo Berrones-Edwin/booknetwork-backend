@@ -2,6 +2,7 @@ package com.example.book_network.book;
 
 import org.springframework.stereotype.Service;
 
+import com.example.book_network.file.FileUtils;
 import com.example.book_network.history.BookTransactionHistory;
 
 @Service
@@ -27,7 +28,7 @@ public class BookMapper {
                 .authorName(book.getAuthorName())
                 .isbn(book.getIsbn())
                 .synopsis(book.getSynopsis())
-                // .cover(null)
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .rate(book.getRate())
                 .archived(book.isArchived())
                 .shareable(book.isShareable())
