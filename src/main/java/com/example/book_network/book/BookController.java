@@ -3,6 +3,7 @@ package com.example.book_network.book;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,4 +68,14 @@ public class BookController {
             Authentication authentication) {
         return ResponseEntity.ok(bookService.findAllReturnedBooks(page, size, authentication));
     }
+
+    @PatchMapping("/shareable/{bookId}")
+    public ResponseEntity<Integer> updateShareableStatus(
+            @PathVariable("bookId") Integer bookId,
+            Authentication authentication) {
+
+        return ResponseEntity.ok(bookService.updateShareableStatus(bookId, authentication));
+
+    }
+
 }

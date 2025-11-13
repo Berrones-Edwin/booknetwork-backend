@@ -1,6 +1,7 @@
 package com.example.book_network.book;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.example.book_network.exception.OperationNotPermittedException;
 import com.example.book_network.history.BookTransactionHistory;
 import com.example.book_network.history.BookTransactionHistoryRepository;
 import com.example.book_network.user.User;
@@ -122,6 +124,19 @@ public class BookService {
                                 allBorrowedBooks.getTotalPages(),
                                 allBorrowedBooks.isFirst(),
                                 allBorrowedBooks.isLast());
+        }
+
+        public Integer updateShareableStatus(Integer bookId, Authentication authentication) {
+                User user = ((User) authentication.getPrincipal());
+                Book book = bookRepository.findById(bookId)
+                                .orElseThrow(() -> new EntityNotFoundException("No book found with the ID: " + bookId));
+
+                if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+                        throw new OperationNotPermittedException("You cannot update books shareable status");
+                }
+                book.setShareable(!book.isShareable());
+                bookRepository.save(book);
+                return bookId;
         }
 
 }
