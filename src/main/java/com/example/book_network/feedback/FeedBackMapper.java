@@ -1,5 +1,7 @@
 package com.example.book_network.feedback;
 
+import java.util.Objects;
+
 import org.springframework.stereotype.Service;
 
 import com.example.book_network.book.Book;
@@ -18,6 +20,14 @@ public class FeedBackMapper {
                                 .archived(false)
                                 .shareable(false)
                                 .build())
+                .build();
+    }
+
+    public FeedBackResponse toFeedBackResponse(FeedBack f, Integer id) {
+
+        return FeedBackResponse.builder()
+                .note(f.getNote())
+                .ownFeedBack(Objects.equals(f.getCreatedBy(), id))
                 .build();
     }
 
