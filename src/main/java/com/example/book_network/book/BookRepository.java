@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecificationExecutor<Book> {
 
     @Query("""
-            SELECT book
+            SELECT b
             FROM Book b
             WHERE b.archived =false
             AND b.shareable =true
