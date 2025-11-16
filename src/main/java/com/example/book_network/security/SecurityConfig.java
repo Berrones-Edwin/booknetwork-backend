@@ -2,6 +2,7 @@ package com.example.book_network.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -11,6 +12,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,10 +31,11 @@ public class SecurityConfig {
         public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
                 httpSecurity
-                                .cors(Customizer.withDefaults())
+                                .cors(cors -> cors.configurationSource(configurationSource()))
                                 .csrf(AbstractHttpConfigurer::disable)
                                 .authorizeHttpRequests(
                                                 req -> req
+                                                                .requestMatchers(HttpMethod.OPTIONS, "///").permitAll()
                                                                 .requestMatchers(
                                                                                 "/api/v1/auth/**",
                                                                                 "/auth/**",
@@ -50,6 +55,20 @@ public class SecurityConfig {
                                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
                 return httpSecurity.build();
+        }
+
+        @Bean
+        public CorsConfigurationSource configurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+
+                configuration.setAllowCredentials(true);
+                configuration.addAllowedOrigin("http://localhost:3000");
+                configuration.addAllowedHeader("*");
+                configuration.addAllowedMethod("*");
+
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
         }
 
 }
