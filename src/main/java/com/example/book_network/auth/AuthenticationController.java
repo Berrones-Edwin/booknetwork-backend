@@ -1,5 +1,7 @@
 package com.example.book_network.auth;
 
+import java.util.HashMap;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +28,9 @@ public class AuthenticationController {
             @RequestBody @Valid RegistrationRequest request) throws MessagingException {
 
         authService.register(request);
-        return ResponseEntity.accepted().build();
+        var response = new HashMap<String, String>();
+        response.put("ok", "true");
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
