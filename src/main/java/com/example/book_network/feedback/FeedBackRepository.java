@@ -11,6 +11,7 @@ public interface FeedBackRepository extends JpaRepository<FeedBack, Integer> {
             SELECT f
             FROM FeedBack f
             WHERE f.book.id = :bookId
+            AND f.createdBy >0
             """)
     Page<FeedBack> findAllByBookId(Integer bookId, Pageable pageable);
 
