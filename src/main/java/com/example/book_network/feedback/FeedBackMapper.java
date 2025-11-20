@@ -27,6 +27,7 @@ public class FeedBackMapper {
 
         return FeedBackResponse.builder()
                 .note(f.getNote())
+                .comment(f.getComment())
                 .ownFeedBack(Objects.equals(f.getCreatedBy(), id))
                 .build();
     }
