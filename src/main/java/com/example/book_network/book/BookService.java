@@ -166,7 +166,7 @@ public class BookService {
 
                 }
                 User user = ((User) authentication.getPrincipal());
-                if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+                if (Objects.equals(book.getOwner().getId(), user.getId())) {
                         throw new OperationNotPermittedException("You cannot borrow your own book");
                 }
 
@@ -199,7 +199,7 @@ public class BookService {
                 }
                 User user = ((User) authentication.getPrincipal());
 
-                if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+                if (Objects.equals(book.getOwner().getId(), user.getId())) {
                         throw new OperationNotPermittedException("You cannot borrow or return  your own book");
                 }
 
@@ -220,7 +220,7 @@ public class BookService {
                 }
                 User user = ((User) authentication.getPrincipal());
 
-                if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+                if (Objects.equals(book.getOwner().getId(), user.getId())) {
                         throw new OperationNotPermittedException("You cannot borrow or return  your own book");
                 }
 
