@@ -25,7 +25,7 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
 
         @Query("""
                         SELECT
-                        COUNT(COUNT(*)>0) AS isBorrowed
+                        (COUNT(*)>0) AS isBorrowed
                         FROM BookTransactionHistory h
                         WHERE h.user.id = :id
                         AND h.book.id = :bookId
