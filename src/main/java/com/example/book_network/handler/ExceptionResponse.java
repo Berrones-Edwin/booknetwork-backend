@@ -24,5 +24,4 @@ public class ExceptionResponse {
     private String error;
     private Set<String> validationErrors;
     private Map<String, String> errors;
-
 }
