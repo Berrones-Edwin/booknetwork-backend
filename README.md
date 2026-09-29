@@ -1,12 +1,12 @@
 # BookNetwork
 
-BookNetwork manageyour book collection, share with your firends and discover new reads.
+BookNetwork helps readers organize their personal book collections and connect with others through book sharing. Users can list books, choose which ones are available to share, borrow books, and keep track of borrowed and returned titles. The platform also includes user accounts and feedback features to support a connected reading community.
 
 ## Technologies | Tecnologías
 
 - Java
 - Spring boot
-- Postgresql
+- MySQL
 
 ## Demo
 
